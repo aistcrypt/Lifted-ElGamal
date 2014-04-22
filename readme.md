@@ -115,5 +115,5 @@ licenseフォルダにはオリジナルのライセンスファイルがある�
 
 # history
 
-2014/Mar/QQQ ; initial version
+2014/April/23 ; initial version
 
