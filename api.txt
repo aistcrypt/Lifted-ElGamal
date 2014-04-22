@@ -1,0 +1,291 @@
+-----------------------------------------------------------------------------
+Lifted-ElGamalライブラリの概要
+-----------------------------------------------------------------------------
+
+Lifted-ElGamalライブラリは、入力値の異常を検知できる楕円ElGamal暗号の
+C++ライブラリである。
+二つのクラスG, Znをパラメータとするtemplateクラスmie::ElgamalTからなる。
+
+ここでGはElGamal暗号で使う群を表すクラス、ZnはGの位数を表す有限体クラスである。
+Gは単位元1と群演算を表すmul、逆元inv、除算divを持つことが要求される。
+mie/include/mie/ec.hppのテンプレートクラスEcTの利用を想定している。
+
+Znはmie/include/mie/fp.hppのテンプレートクラスFpTの利用を想定している。
+平文クラスとして利用する。
+
+Zkpはゼロ知識証明のパラメータ(以下ZKPパラメータと略す)を表すクラスである。
+cybozu/crypto.hppのcybozu::Hashクラスの利用を想定している。
+
+Zkpは与えられた暗号文の元の平文が0か1であったことを復号することなく確認
+できるための情報を持つ。
+
+ElGamalライブラリGやZnを適切に選ぶことで通常の有限体上のElGamal暗号と
+楕円ElGamal暗号に対応できる。セキュリティパラメータ(ビット長)も任意である。
+
+詳細はtest/elgamal_test.cppやsrc/vote_tool.cppの具体例を参照。
+
+mie::ElgamalT<G, Zn>クラス内クラスとして
+PrivateKey, PublicKey, CipherText, PowerCache, Zkpがある。
+
+PrivateKey ; 秘密鍵を表すクラス
+PublicKey  ; 公開鍵を表すクラス
+CipherText ; 暗号文を表すクラス
+PowerCache ; 巾乗をキャッシュするクラス(高速な復号を実現するためのクラス)
+Zkp        ; ZKPパラメータを持つクラス
+
+-----------------------------------------------------------------------------
+PrivateKey
+-----------------------------------------------------------------------------
+
+ElGamal暗号の秘密鍵を表すクラス。主要なメンバ関数は次の通り。
+
+template<class RG>
+void init(const G& f, size_t bitLen, RG& rg);
+
+Gの単位元fを基にセキュリティパラメータbitLenのセットアップを行う。
+これにより秘密鍵z, 公開鍵(f, g, h=g^z)を設定する。
+
+クラスRGは乱数生成クラスである。この仕様書の中でRGは全て乱数生成クラスを表す。
+
+const PublicKey& getPublicKey() const;
+
+秘密鍵に対応する公開鍵クラスのインスタンスを取得する。
+
+void dec(Zn& m, const CipherText& c, int limit = 100000) const;
+
+秘密鍵を用いて暗号文cを復号し、平文mをえる。
+limitはmの絶対値の最大値である。平文がその範囲内に存在しなければ例外が発生する。
+PowerCacheを用いた方が高速に復号できる。
+
+std::ostream& operator<<(std::ostream& os, const PrivateKey& self);
+
+秘密鍵のインスタンスを文字列化する。
+
+std::istream& operator>>(std::istream& is, PrivateKey& self);
+
+文字列化された秘密鍵からそのインスタンスを復元する。
+
+encWithZkp()でゼロ知識証明つきで暗号化を行い、verify()で与えられた暗号文が
+0か1であることを確認する。
+
+template<class RG, class Hash>
+void encWithZkp(CipherText& c, Zkp& zkp, int m, Hash& hash, RG& rg) const;
+
+平文mからZKPパラメータzkpつきで暗号文cを生成する。
+
+CipherText& c ; [out] 暗号文
+Zkp& zkp      ; [out] ZKPパラメータ
+int m         ; [in] 平文(0 or 1, それ以外は例外が発生する)
+Hash& hash    ; [in] ハッシュクラス
+RG& rg        ; [in] 乱数生成クラス
+
+template<class Hash>
+bool verify(const CipherText& c, const Zkp& zkp, Hash& hash) const;
+
+与えられた暗号文cとZKPパラメータzkpとhashからcが0か1を暗号化したもの
+であることが確認できればtrue、そうでなければfalseを返す。
+
+const CipherText& c ; [in] 暗号文
+const Zkp& zkp      ; [in] ZKPパラメータ
+Hash& hash          ; [in] ハッシュクラス
+
+-----------------------------------------------------------------------------
+PublicKey
+-----------------------------------------------------------------------------
+
+ElGamal暗号の公開鍵を表すクラス。主要なメンバ関数は次の通り。
+
+template<class RG>
+void enc(CipherText& c, const Zn& m, RG& rg) const;
+
+公開鍵を用いて平文mから暗号文cを生成する。
+
+template<class N>
+void add(CipherText& c, const N& m) const;
+
+暗号文cに整数mを加算する。
+
+template<class RG>
+void rerandomize(CipherText& c, RG& rg) const;
+
+暗号文cを再ランダム化する。
+
+template<class RG, class Hash>
+void encWithZkp(CipherText& c, Zkp& zkp, int m, Hash& hash, RG& rg) const;
+
+平文mからZKPパラメータzkpつきで暗号文cを生成する。
+
+CipherText& c ; [out] 暗号文
+Zkp& zkp      ; [out] ZKPパラメータ
+int m         ; [in] 平文(0 or 1, それ以外は例外が発生する)
+Hash& hash    ; [in] ハッシュクラス
+RG& rg        ; [in] 乱数生成クラス
+
+template<class Hash>
+bool verify(const CipherText& c, const Zkp& zkp, Hash& hash) const;
+
+与えられた暗号文cとZKPパラメータzkpとhashからcが0か1を暗号化したもの
+であることが確認できればtrue、そうでなければfalseを返す。
+
+const CipherText& c ; [in] 暗号文
+const Zkp& zkp      ; [in] ZKPパラメータ
+Hash& hash          ; [in] ハッシュクラス
+
+std::ostream& operator<<(std::ostream& os, const PublicKey& self);
+
+公開鍵のインスタンスを文字列化する。
+
+std::istream& operator>>(std::istream& is, PublicKey& self);
+
+文字列化された公開鍵からそのインスタンスを復元する。
+
+-----------------------------------------------------------------------------
+CipherText
+-----------------------------------------------------------------------------
+
+暗号文を表すクラス。メンバ関数は次の通り。
+
+void clear();
+
+平文m = 0に対する乱数0の自明な暗号化を行う。
+
+void add(const CipherText& c);
+
+暗号文に別の暗号文cを加算する。
+
+template<class N>
+void mul(const N& x);
+
+暗号文をx倍する。
+
+void neg();
+
+平文の符号を反転させた暗号文にする。
+
+std::ostream& operator<<(std::ostream& os, const CipherText& self);
+
+暗号文のインスタンスを文字列化する。
+
+std::istream& operator>>(std::istream& is, CipherText& self);
+
+文字列化された暗号文からそのインスタンスを復元する。
+
+-----------------------------------------------------------------------------
+Zkp
+-----------------------------------------------------------------------------
+ZKPパラメータクラス。
+
+ZKPパラメータのインスタンスを文字列化する。
+
+std::ostream& operator<<(std::ostream& os, const Zkp& self);
+
+文字列化されたZKPパラメータからそのインスタンスを復元する。
+
+std::istream& operator>>(std::istream& is, Zkp& self);
+
+-----------------------------------------------------------------------------
+PowerCache
+-----------------------------------------------------------------------------
+
+巾乗をキャッシュすることで高速に復号するためのクラス。メンバ関数は次の通り。
+
+void init(const G& f, int rangeMin, int rangeMax);
+
+S = {f^x | x in [rangeMin, rangeMax]}となる集合のキャッシュを生成する。
+
+int getExponent(const G& g) const
+
+g = f^xとなるxを返す。gがSの元でない場合は例外が発生する。
+
+-----------------------------------------------------------------------------
+例外
+-----------------------------------------------------------------------------
+
+なんらかの異常が発生した場合は例外が発生する。
+例外クラスはcybozu::Exceptionである。cybozu::Exceptionはstd::exceptionを継承し、
+エラーの内容はconst char *what() constメソッドで取得できる。
+
+-----------------------------------------------------------------------------
+サンプル
+-----------------------------------------------------------------------------
+
+次はSEC 2(Recommended Elliptic Curve Domain Parameters)で192ビットセキュリティ
+の楕円曲線パラメータとして推奨されているsecp192k1を用いた楕円ElGamal暗号を利用
+するときの初期化手順である。
+
+/*
+    各種ヘッダのインクルード
+*/
+#include <mie/fp.hpp>
+#include <mie/gmp_util.hpp>
+#include <mie/ecparam.hpp>
+#include <mie/elgamal.hpp>
+#include <cybozu/random_generator.hpp>
+#include <cybozu/crypto.hpp>
+
+/*
+    Ec, Znを定義してElgamalEcクラスを作る。
+*/
+struct TagEc;
+typedef mie::FpT<mie::Gmp> Fp;
+typedef mie::EcT<Fp> Ec;
+// FpとZnは異なるクラスであるため、区別するために第2引数にTagEcを指定する。
+typedef mie::FpT<mie::Gmp, TagEc> Zn;
+typedef mie::ElgamalT<Ec, Zn> ElgamalEc;
+
+/*
+    secp192k1のパラメータを用いて楕円曲線上の群の生成元Pを作る。
+*/
+const mie::EcParam& para = mie::ecparam::secp192k1;
+Fp::setModulo(para.p);
+Zn::setModulo(para.n);
+Ec::setParam(para.a, para.b);
+const Fp x0(para.gx);
+const Fp y0(para.gy);
+const size_t bitLen = Zn(-1).getBitLen();
+const Ec P(x0, y0);
+
+/*
+    Pを用いて秘密鍵を初期化する。
+*/
+cybozu::RandomGenerator rg;
+ElgamalEc::PrivateKey prv;
+prv.init(P, bitLen, rg);
+
+/*
+    秘密鍵から公開鍵を取り出す。
+*/
+const ElgamalEc::PublicKey& pub = prv.getPublicKey();
+
+/*
+    平文1を暗号化する。
+*/
+const int m = 1;
+ElgamalEc::CipherText c;
+pub.enc(c, m, rg);
+
+/*
+    暗号文cから平文を復号する。
+*/
+Zn d;
+prv.dec(d, c);
+/*
+    d == 1となっている。
+*/
+/*
+    SHA-256を用いてZKPパラメータつきで平文0を暗号化するサンプル。
+*/
+ElgamalEc::Zkp zkp;
+ElgamalEc::CipherText c;
+cybozu::crypto::Hash hash(cybozu::crypto::Hash::N_SHA256);
+pub.encWithZkp(c, zkp, 0, hash, rg);
+
+bool b = pub.verify(c, zkp, hash); // bはtrueである。
+
+/*
+    SHA-256を用いてZKPパラメータつきで平文2を暗号化するサンプル。
+*/
+cybozu::crypto::Hash hash(cybozu::crypto::Hash::N_SHA256);
+pub.encWithZkp(c, zkp, 2, hash, rg);
+
+bool b = pub.verify(c, zkp, hash); // 平文が0でも1でもないためbはfalseである。
