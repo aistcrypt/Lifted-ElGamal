@@ -100,7 +100,7 @@ The licenses of those libraries are stored in the folder named 'license'
 
 # Contact Information
 
-* [Research Institute for Secure Systems](https://www.risec.aist.go.jp/index-en.html "RISEC"), National Institute of Advanced Industrial Science and Technology. Tel: +81 29-861-5284
+* [Research Institute for Secure Systems](https://www.risec.aist.go.jp/index-en.html "RISEC"), [Computational Biology Research Center](http://www.cbrc.jp/index.html "CBRC"), National Institute of Advanced Industrial Science and Technology. Tel: +81 29-861-5284
 
 # History
 
