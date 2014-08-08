@@ -181,7 +181,7 @@ struct ElgamalT {
 		void enc(CipherText& c, const Zn& m, RG& rg) const
 		{
 			Zn u;
-			u.initRand(rg, bitLen);
+			u.setRand(rg);
 			powerG(c.c1, u);
 			powerH(c.c2, u);
 			G t;
@@ -200,15 +200,15 @@ struct ElgamalT {
 				throw cybozu::Exception("elgamal:PublicKey:encWithZkp") << m;
 			}
 			Zn u;
-			u.initRand(rg, bitLen);
+			u.setRand(rg);
 			powerG(c.c1, u);
 			powerH(c.c2, u);
 			if (m) {
 				TagG::mul(c.c2, c.c2, f);
 				Zn r1;
-				r1.initRand(rg, bitLen);
-				zkp.c0.initRand(rg, bitLen);
-				zkp.s0.initRand(rg, bitLen);
+				r1.setRand(rg);
+				zkp.c0.setRand(rg);
+				zkp.s0.setRand(rg);
 				G R01, R02, R11, R12;
 				G t1, t2;
 				powerG(t1, zkp.s0);
@@ -229,9 +229,9 @@ struct ElgamalT {
 				zkp.s1 = r1 + zkp.c1 * u;
 			} else {
 				Zn r0;
-				r0.initRand(rg, bitLen);
-				zkp.c1.initRand(rg, bitLen);
-				zkp.s1.initRand(rg, bitLen);
+				r0.setRand(rg);
+				zkp.c1.setRand(rg);
+				zkp.s1.setRand(rg);
 				G R01, R02, R11, R12;
 				powerG(R01, r0);
 				powerH(R02, r0);
@@ -291,7 +291,7 @@ struct ElgamalT {
 		void rerandomize(CipherText& c, RG& rg) const
 		{
 			Zn v;
-			v.initRand(rg, bitLen);
+			v.setRand(rg);
 			G t;
 			powerG(t, v);
 			TagG::mul(c.c1, c.c1, t);
@@ -357,9 +357,9 @@ struct ElgamalT {
 		void init(const G& f, size_t bitLen, RG& rg)
 		{
 			G g, h;
-			z.initRand(rg, bitLen);
+			z.setRand(rg);
 			G::power(g, f, z);
-			z.initRand(rg, bitLen);
+			z.setRand(rg);
 			G::power(h, g, z);
 			pub.init(bitLen, f, g, h);
 		}
