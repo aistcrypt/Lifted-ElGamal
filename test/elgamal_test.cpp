@@ -8,7 +8,7 @@
 #if defined(_WIN64) || defined(__x86_64__)
 	#define USE_MONT_FP
 #endif
-#ifdef USE_MONTFP
+#ifdef USE_MONT_FP
 #include <mie/mont_fp.hpp>
 typedef mie::MontFpT<4> Fp;
 #else
