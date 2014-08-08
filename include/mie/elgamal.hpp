@@ -156,9 +156,8 @@ struct ElgamalT {
 			, enablePowerWindow_(false)
 		{
 		}
-		void enablePowerWindow()
+		void enablePowerWindow(size_t winSize = 10)
 		{
-			const size_t winSize = 10;
 			powf.init(f, bitLen, winSize);
 			powg.init(g, bitLen, winSize);
 			powh.init(h, bitLen, winSize);
