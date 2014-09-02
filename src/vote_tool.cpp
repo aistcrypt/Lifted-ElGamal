@@ -128,16 +128,6 @@ inline std::istream& operator>>(std::istream& is, CipherWithZkp& self)
 	return is >> self.c >> self.zkp;
 }
 
-template<class T>
-void shuffle(T& v)
-{
-	if (v.size() <= 1) return;
-	for (size_t i = 0, n = v.size(); i < n - 1; i++) {
-		size_t r = size_t(rg.get64() % n);
-		std::swap(v[i], v[r]);
-	}
-}
-
 void Vote(const std::string& voteList)
 {
 	Elgamal::PublicKey pub;
@@ -147,7 +137,7 @@ void Vote(const std::string& voteList)
 	for (size_t i = 0; i < idxTbl.size(); i++) {
 		idxTbl[i] = i;
 	}
-	shuffle(idxTbl);
+	cybozu::shuffle(idxTbl, rg);
 	puts("each voter votes");
 	for (size_t i = 0; i < voteList.size(); i++) {
 		CipherWithZkp c;

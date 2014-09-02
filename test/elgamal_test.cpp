@@ -10,7 +10,7 @@
 #endif
 #ifdef USE_MONT_FP
 #include <mie/mont_fp.hpp>
-typedef mie::MontFpT<4> Fp;
+typedef mie::MontFpT<3> Fp;
 #else
 typedef mie::FpT<mie::Gmp> Fp;
 #endif
@@ -59,6 +59,15 @@ CYBOZU_TEST_AUTO(testFp)
 	ElgamalFp::CipherText c1, c2;
 	pub.enc(c1, m1, rg);
 	pub.enc(c2, m2, rg);
+	// BitVector
+	{
+		cybozu::BitVector bv;
+		c1.appendToBitVec(bv);
+		ElgamalFp::CipherText c3;
+		c3.fromBitVec(bv);
+		CYBOZU_TEST_EQUAL(c1.c1, c3.c1);
+		CYBOZU_TEST_EQUAL(c1.c2, c3.c2);
+	}
 	Zn dec1, dec2;
 	prv.dec(dec1, c1);
 	prv.dec(dec2, c2);
@@ -196,6 +205,15 @@ CYBOZU_TEST_AUTO(testEc)
 	ElgamalEc::CipherText c1, c2;
 	pub.enc(c1, m1, rg);
 	pub.enc(c2, m2, rg);
+	// BitVector
+	{
+		cybozu::BitVector bv;
+		c1.appendToBitVec(bv);
+		ElgamalEc::CipherText c3;
+		c3.fromBitVec(bv);
+		CYBOZU_TEST_EQUAL(c1.c1, c3.c1);
+		CYBOZU_TEST_EQUAL(c1.c2, c3.c2);
+	}
 	Zn dec1, dec2;
 	prv.dec(dec1, c1);
 	prv.dec(dec2, c2);

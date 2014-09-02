@@ -98,7 +98,7 @@ struct ElgamalT {
 		}
 		void fromBitVec(const cybozu::BitVector& bv)
 		{
-			size_t bitLen = typename G::getBitVecSize();
+			size_t bitLen = G::getBitVecSize();
 			cybozu::BitVector t;
 			bv.extract(t, 0, bitLen);
 			c1.fromBitVec(t);
@@ -107,7 +107,7 @@ struct ElgamalT {
 		}
 		static inline size_t getBitVecSize()
 		{
-			return typename G::getBitVecSize() * 2;
+			return G::getBitVecSize() * 2;
 		}
 	};
 	/*
