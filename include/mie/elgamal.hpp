@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <cybozu/unordered_map.hpp>
+#include <cybozu/bitvector.hpp>
 #ifndef CYBOZU_UNORDERED_MAP_STD
 #include <map>
 #endif
@@ -89,6 +90,24 @@ struct ElgamalT {
 			is >> std::hex >> self.c1 >> self.c2;
 			is.flags(flags);
 			return is;
+		}
+		void appendToBitVec(cybozu::BitVector& bv) const
+		{
+			c1.appendToBitVec(bv);
+			c2.appendToBitVec(bv);
+		}
+		void fromBitVec(const cybozu::BitVector& bv)
+		{
+			size_t bitLen = typename G::getBitVecSize();
+			cybozu::BitVector t;
+			bv.extract(t, 0, bitLen);
+			c1.fromBitVec(t);
+			bv.extract(t, bitLen, bitLen);
+			c2.fromBitVec(t);
+		}
+		static inline size_t getBitVecSize()
+		{
+			return typename G::getBitVecSize() * 2;
 		}
 	};
 	/*
