@@ -329,4 +329,21 @@ CYBOZU_TEST_AUTO(testEc)
 		CYBOZU_TEST_ASSERT(!pub.verify(c, zkp, hash));
 		CYBOZU_TEST_EXCEPTION_MESSAGE(pub.encWithZkp(c, zkp, 2, hash, rg), cybozu::Exception, "encWithZkp");
 	}
+	// cache
+	{
+		const int m1 = 9876;
+		const int m2 = -3142;
+		ElgamalEc::CipherText c1, c2;
+		pub.enc(c1, m1, rg);
+		pub.enc(c2, m2, rg);
+		prv.setCache(-10000, 10000);
+		int dec1 = prv.dec(c1);
+		int dec2 = prv.dec(c2);
+		CYBOZU_TEST_EQUAL(m1, dec1);
+		CYBOZU_TEST_EQUAL(m2, dec2);
+		c1.add(c2);
+		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
+		prv.clearCache();
+		CYBOZU_TEST_EXCEPTION(prv.dec(c1), cybozu::Exception);
+	}
 }

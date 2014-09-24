@@ -358,10 +358,57 @@ struct ElgamalT {
 			return is;
 		}
 	};
-
+	/*
+		create table f^i for i in [rangeMin, rangeMax]
+	*/
+	struct PowerCache {
+		typedef _G G;
+#if (CYBOZU_CPP_VERSION > CYBOZU_CPP_VERSION_CP03)
+		typedef CYBOZU_NAMESPACE_STD::unordered_map<G, int> Cache;
+#else
+		typedef std::map<G, int> Cache;
+#endif
+		Cache cache;
+		void init(const G& f, int rangeMin, int rangeMax)
+		{
+			if (rangeMin > rangeMax) throw cybozu::Exception("mie:ElgamalT:PowerCache:bad range") << rangeMin << rangeMax;
+			G x;
+			x.clear();
+			cache[x] = 0;
+			for (int i = 1; i <= rangeMax; i++) {
+				TagG::mul(x, x, f);
+				cache[x] = i;
+			}
+			G nf;
+			TagG::inv(nf, f);
+			x.clear();
+			for (int i = -1; i >= rangeMin; i--) {
+				TagG::mul(x, x, nf);
+				cache[x] = i;
+			}
+		}
+		/*
+			return m such that f^m = g
+		*/
+		int getExponent(const G& g) const
+		{
+			typename Cache::const_iterator i = cache.find(g);
+			if (i == cache.end()) throw cybozu::Exception("Elgamal:PowerCache:getExponent:not found") << g;
+			return i->second;
+		}
+		void clear()
+		{
+			cache.clear();
+		}
+		bool isEmpty() const
+		{
+			return cache.empty();
+		}
+	};
 	class PrivateKey {
 		PublicKey pub;
 		Zn z;
+		PowerCache cache;
 	public:
 		typedef _G G;
 		/*
@@ -426,6 +473,31 @@ struct ElgamalT {
 			TagG::div(powfm, c.c2, c1z);
 		}
 		/*
+			set range of message to decode quickly
+		*/
+		void setCache(int rangeMin, int rangeMax)
+		{
+			cache.init(pub.getF(), rangeMin, rangeMax);
+		}
+		/*
+			clear cache
+		*/
+		void clearCache()
+		{
+			cache.clear();
+		}
+		/*
+			decode message by using cache
+			input : c = (c1, c2)
+			return m
+		*/
+		int dec(const CipherText& c) const
+		{
+			G powfm;
+			getPowerf(powfm, c);
+			return cache.getExponent(powfm);
+		}
+		/*
 			check whether c is encrypted zero message
 		*/
 		bool isZeroMessage(const CipherText& c) const
@@ -458,45 +530,6 @@ struct ElgamalT {
 			is >> self.pub  >> std::hex >> self.z;
 			is.flags(flags);
 			return is;
-		}
-	};
-	/*
-		create table f^i for i in [rangeMin, rangeMax]
-	*/
-	struct PowerCache {
-		typedef _G G;
-#if (CYBOZU_CPP_VERSION > CYBOZU_CPP_VERSION_CP03)
-		typedef CYBOZU_NAMESPACE_STD::unordered_map<G, int> Cache;
-#else
-		typedef std::map<G, int> Cache;
-#endif
-		Cache cache;
-		void init(const G& f, int rangeMin, int rangeMax)
-		{
-			if (rangeMin > rangeMax) throw cybozu::Exception("mie:ElgamalT:PowerCache:bad range") << rangeMin << rangeMax;
-			G x;
-			x.clear();
-			cache[x] = 0;
-			for (int i = 1; i <= rangeMax; i++) {
-				TagG::mul(x, x, f);
-				cache[x] = i;
-			}
-			G nf;
-			TagG::inv(nf, f);
-			x.clear();
-			for (int i = -1; i >= rangeMin; i--) {
-				TagG::mul(x, x, nf);
-				cache[x] = i;
-			}
-		}
-		/*
-			return m such that f^m = g
-		*/
-		int getExponent(const G& g) const
-		{
-			typename Cache::const_iterator i = cache.find(g);
-			if (i == cache.end()) throw cybozu::Exception("Elgamal:PowerCache:getExponent:not found") << g;
-			return i->second;
 		}
 	};
 };
