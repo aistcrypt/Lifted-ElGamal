@@ -11,3 +11,6 @@ test:
 clean:
 #	$(MAKE) -C src clean
 	$(MAKE) -C test clean
+
+header:
+	python tool/dispatch.py tool/dispatch_tmpl.txt include/impl/elgamal_dispatch.hpp

@@ -1,0 +1,161 @@
+/*
+	Don't modify elgamal_dispatch.hpp directly.
+	How to create elgamal_dispatch.hpp
+	python tool/dispatch.py tool/dispatch_tmpl.txt include/impl/elgamal_dispatch.hpp
+*/
+#include <string>
+#include <mie/mont_fp.hpp>
+
+namespace elgamal_disp {
+
+namespace local {
+
+typedef elgamal_impl::local::Fp FpType0;
+typedef mie::MontFpT<3> FpType3;
+typedef mie::MontFpT<4> FpType4;
+typedef mie::MontFpT<6> FpType6;
+typedef mie::MontFpT<9> FpType9;
+
+} // elgamal_disp::local
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4290)
+#endif
+
+struct System {
+	static inline void init(const std::string& param)
+	{
+		std::istringstream is(param);
+		std::string ecParamStr;
+		std::string gmpStr;
+		is >> ecParamStr >> gmpStr;
+		const mie::EcParam *ecParam = mie::getEcParam(ecParamStr);
+		if (gmpStr != "gmp") {
+			if (ecParam->bitLen <= 64 * 3) {
+				elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::System::init(param);
+				getFpTypeInstance() = 1;
+				return;
+			}
+			if (ecParam->bitLen <= 64 * 4) {
+				elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::System::init(param);
+				getFpTypeInstance() = 2;
+				return;
+			}
+			if (ecParam->bitLen <= 64 * 6) {
+				elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::System::init(param);
+				getFpTypeInstance() = 3;
+				return;
+			}
+			if (64 * 8 < ecParam->bitLen && ecParam->bitLen <= 64 * 9) {
+				elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::System::init(param);
+				getFpTypeInstance() = 4;
+				return;
+			}
+		}
+		elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::System::init(param);
+	}
+	static inline int getFpType() { return getFpTypeInstance(); }
+private:
+	static inline int& getFpTypeInstance()
+	{
+		static int fpType;
+		return fpType;
+	}
+};
+
+@setBaseName(CipherText)
+class CipherText {
+	int fpType_;
+	void *self_;
+	friend class PublicKey;
+	friend class PrivateKey;
+public:
+	@baseFeature(CipherText, CipherText)
+	void add(const CipherText& c) throw(std::exception)
+	{
+		if (fpType_ != c.fpType_) throw cybozu::Exception("CipherText:add:bad fpType") << fpType_ << c.fpType_;
+		@dispatch(((@className(CipherText)*)self_)->add(*(const @className(CipherText)*)c.self_);)
+	}
+	void mul(const elgamal::Zn& zn) throw(std::exception)
+	{
+		@dispatch(((@className(CipherText)*)self_)->mul(zn);)
+	}
+	void neg() throw(std::exception)
+	{
+		@dispatch(((@className(CipherText)*)self_)->neg();)
+	}
+};
+
+@setBaseName(PublicKey)
+class PublicKey {
+	int fpType_;
+	void *self_;
+	friend class PrivateKey;
+public:
+	@baseFeature(PublicKey, PublicKey)
+	void save(const std::string& pubFile) const throw(std::exception)
+	{
+		@dispatch(((const @className(PublicKey*))self_)->save(pubFile);)
+	}
+	void load(const std::string& pubFile) throw(std::exception)
+	{
+		@dispatch(((@className(PublicKey*))self_)->load(pubFile);)
+	}
+	void add(CipherText& c, const elgamal::Zn& zn) const throw(std::exception)
+	{
+		@dispatch(((const @className(PublicKey)*)self_)->add(*((@className(CipherText)*)c.self_), zn);)
+	}
+	void enc(CipherText& c, const elgamal::Zn& zn) const throw(std::exception)
+	{
+		@dispatch(((const @className(PublicKey)*)self_)->enc(*((@className(CipherText)*)c.self_), zn);)
+	}
+	void rerandomize(CipherText& c) const throw(std::exception)
+	{
+		@dispatch(((const @className(PublicKey)*)self_)->rerandomize(*((@className(CipherText)*)c.self_));)
+	}
+};
+
+@setBaseName(PrivateKey)
+class PrivateKey {
+	int fpType_;
+	void *self_;
+public:
+	@baseFeature(PrivateKey, PrivateKey)
+	void init() throw(std::exception)
+	{
+		@dispatch(((@className(PrivateKey*))self_)->init();)
+	}
+	void save(const std::string& prvFile) const throw(std::exception)
+	{
+		@dispatch(((const @className(PrivateKey*))self_)->save(prvFile);)
+	}
+	void load(const std::string& prvFile) throw(std::exception)
+	{
+		@dispatch(((@className(PrivateKey*))self_)->load(prvFile);)
+	}
+	void setCache(int rangeMin, int rangeMax) throw(std::exception)
+	{
+		@dispatch(((@className(PrivateKey*))self_)->setCache(rangeMin, rangeMax);)
+	}
+	void clearCache() throw(std::exception)
+	{
+		@dispatch(((@className(PrivateKey*))self_)->clearCache();)
+	}
+	PublicKey getPublicKey() const throw(std::exception)
+	{
+		PublicKey ret;
+		@dispatch(*((@className(PublicKey)*)ret.self_) = ((const @className(PrivateKey*))self_)->getPublicKey();)
+		return ret;
+	}
+	void dec(elgamal::Zn& m, const CipherText& c) const throw(std::exception)
+	{
+		@dispatch(((const @className(PrivateKey)*)self_)->dec(m, *((const @className(CipherText)*)c.self_));)
+	}
+	int dec(const CipherText& c) const throw(std::exception)
+	{
+		@dispatch(return ((const @className(PrivateKey)*)self_)->dec(*((const @className(CipherText)*)c.self_));)
+	}
+};
+
+} // elgamal_disp

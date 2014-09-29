@@ -5,6 +5,7 @@
 #include <cybozu/random_generator.hpp>
 #include <mie/ecparam.hpp>
 #include <cybozu/crypto.hpp>
+#include <cybozu/benchmark.hpp>
 #if defined(_WIN64) || defined(__x86_64__)
 	#define USE_MONT_FP
 #endif
@@ -345,5 +346,14 @@ CYBOZU_TEST_AUTO(testEc)
 		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
 		prv.clearCache();
 		CYBOZU_TEST_EXCEPTION(prv.dec(c1), cybozu::Exception);
+	}
+	// benchmark
+	{
+		int m = 12345;
+		ElgamalEc::CipherText c;
+		CYBOZU_BENCH("enc", pub.enc, c, m, rg);
+		prv.setCache(0, 20000);
+		CYBOZU_BENCH("dec", prv.dec, c);
+		CYBOZU_BENCH("rand", pub.rerandomize, c, rg);
 	}
 }

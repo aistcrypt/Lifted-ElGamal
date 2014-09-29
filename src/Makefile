@@ -1,6 +1,6 @@
 include ../common.mk
 
-SRC=vote_tool.cpp
+SRC=vote_tool.cpp bench.cpp
 TARGET=$(addprefix $(TOPDIR)bin/, $(SRC:.cpp=$(OBJSUF).exe))
 LIBS=
 
