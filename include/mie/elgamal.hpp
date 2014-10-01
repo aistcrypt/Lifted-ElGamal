@@ -6,6 +6,7 @@
 	Science and Technology All rights reserved.
 	This source file is subject to BSD 3-Clause license.
 */
+#include <limits.h>
 #include <string>
 #include <sstream>
 #include <cybozu/unordered_map.hpp>
@@ -431,7 +432,7 @@ struct ElgamalT {
 		}
 		const PublicKey& getPublicKey() const { return pub; }
 		/*
-			decode message
+			decode message by brute-force attack
 			input : c = (c1, c2)
 			output : m
 			M = c2 / c1^z
@@ -487,12 +488,23 @@ struct ElgamalT {
 			cache.clear();
 		}
 		/*
-			decode message by using cache
+			decode message by lookup table if !cache.isEmpty()
+			                  brute-force attack otherwise
 			input : c = (c1, c2)
 			return m
 		*/
 		int dec(const CipherText& c) const
 		{
+			if (cache.isEmpty()) {
+				Zn m;
+				dec(m, c);
+				if (m <= INT_MAX) {
+					return (int)Zn::getBlock(m, 0);
+				} else {
+					Zn::neg(m, m);
+					return -(int)Zn::getBlock(m, 0);
+				}
+			}
 			G powfm;
 			getPowerf(powfm, c);
 			return cache.getExponent(powfm);

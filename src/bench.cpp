@@ -7,13 +7,15 @@ void bench(const char *param)
 	printf("param %s\n", param);
 	elgamal::System::init(param);
 	elgamal::PrivateKey prv;
-	prv.init();
-	prv.setCache(0, 20000);
+	CYBOZU_BENCH("init", prv.init);
 	const elgamal::PublicKey& pub = prv.getPublicKey();
 
 	elgamal::CipherText c;
 	CYBOZU_BENCH("enc", pub.enc, c, 12345);
-	CYBOZU_BENCH("dec", prv.dec, c);
+	// not set cache
+	CYBOZU_BENCH_C("dec wo tbl", 10, prv.dec, c);
+	prv.setCache(0, 20000);
+	CYBOZU_BENCH("dec w  tbl", prv.dec, c);
 	CYBOZU_BENCH("rand", pub.rerandomize, c);
 }
 
