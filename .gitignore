@@ -1,0 +1,9 @@
+bin/*.exe
+bin/*.pdb
+bin/*.ilk
+bin/*.pdb
+*.opensdf
+*.sdf
+*.suo
+x64
+test/result.txt
