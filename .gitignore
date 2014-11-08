@@ -6,4 +6,7 @@ bin/*.pdb
 *.sdf
 *.suo
 x64
+CVS
 test/result.txt
+debug
+release
