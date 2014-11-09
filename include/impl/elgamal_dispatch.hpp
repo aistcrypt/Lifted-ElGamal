@@ -201,6 +201,105 @@ public:
 	}
 };
 
+class Zkp {
+	int fpType_;
+	void *self_;
+	friend class PublicKey;
+public:
+	Zkp()
+		: fpType_(System::getFpType())
+		, self_(0)
+	{
+		switch (fpType_) {
+		case 0: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp(); break;
+		case 1: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp(); break;
+		case 2: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp(); break;
+		case 3: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp(); break;
+		case 4: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp(); break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	Zkp(const Zkp& rhs)
+		: fpType_(rhs.fpType_)
+		, self_(0)
+	{
+		switch (fpType_) {
+		case 0: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp(*(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)rhs.self_); break;
+		case 1: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp(*(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)rhs.self_); break;
+		case 2: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp(*(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)rhs.self_); break;
+		case 3: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp(*(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)rhs.self_); break;
+		case 4: self_ = (void*)new elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp(*(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)rhs.self_); break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	~Zkp()
+	{
+		switch (fpType_) {
+		case 0: delete (elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)self_; break;
+		case 1: delete (elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)self_; break;
+		case 2: delete (elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)self_; break;
+		case 3: delete (elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)self_; break;
+		case 4: delete (elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)self_; break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	Zkp& operator=(const Zkp& rhs)
+	{
+		Zkp tmp(rhs);
+		swap(tmp);
+		return *this;
+	}
+	void swap(Zkp& rhs) throw()
+	{
+		std::swap(fpType_, rhs.fpType_);
+		std::swap(self_, rhs.self_);
+	}
+	std::string toStr() const throw(std::exception)
+	{
+		switch (fpType_) {
+		case 0: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)self_)->toStr(); break;
+		case 1: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)self_)->toStr(); break;
+		case 2: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)self_)->toStr(); break;
+		case 3: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)self_)->toStr(); break;
+		case 4: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)self_)->toStr(); break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	void fromStr(const std::string& str) throw(std::exception)
+	{
+		switch (fpType_) {
+		case 0: ((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)self_)->fromStr(str); break;
+		case 1: ((elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)self_)->fromStr(str); break;
+		case 2: ((elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)self_)->fromStr(str); break;
+		case 3: ((elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)self_)->fromStr(str); break;
+		case 4: ((elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)self_)->fromStr(str); break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	friend inline std::ostream& operator<<(std::ostream& os, const Zkp& self) throw(std::exception)
+	{
+		switch (self.fpType_) {
+		case 0: return os << *(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)(self.self_); break;
+		case 1: return os << *(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)(self.self_); break;
+		case 2: return os << *(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)(self.self_); break;
+		case 3: return os << *(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)(self.self_); break;
+		case 4: return os << *(const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)(self.self_); break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << self.fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	friend inline std::istream& operator>>(std::istream& is, Zkp& self) throw(std::exception)
+	{
+		switch (self.fpType_) {
+		case 0: return is >> *(elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)(self.self_); break;
+		case 1: return is >> *(elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)(self.self_); break;
+		case 2: return is >> *(elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)(self.self_); break;
+		case 3: return is >> *(elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)(self.self_); break;
+		case 4: return is >> *(elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)(self.self_); break;
+		default: throw cybozu::Exception("elgamal_disp:Zkp:bad fpType_") << self.fpType_ << __FILE__ << __LINE__;
+		}
+	}
+};
+
 class PublicKey {
 	int fpType_;
 	void *self_;
@@ -350,6 +449,28 @@ public:
 		case 2: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::PublicKey*)self_)->rerandomize(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::CipherText*)c.self_)); break;
 		case 3: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::PublicKey*)self_)->rerandomize(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::CipherText*)c.self_)); break;
 		case 4: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::PublicKey*)self_)->rerandomize(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::CipherText*)c.self_)); break;
+		default: throw cybozu::Exception("elgamal_disp:PublicKey:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	void encWithZkp(CipherText& c, Zkp& zkp, int m) const
+	{
+		switch (fpType_) {
+		case 0: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::PublicKey*)self_)->encWithZkp(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)zkp.self_), m); break;
+		case 1: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::PublicKey*)self_)->encWithZkp(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)zkp.self_), m); break;
+		case 2: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::PublicKey*)self_)->encWithZkp(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)zkp.self_), m); break;
+		case 3: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::PublicKey*)self_)->encWithZkp(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)zkp.self_), m); break;
+		case 4: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::PublicKey*)self_)->encWithZkp(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)zkp.self_), m); break;
+		default: throw cybozu::Exception("elgamal_disp:PublicKey:bad fpType_") << fpType_ << __FILE__ << __LINE__;
+		}
+	}
+	bool verify(const CipherText& c, const Zkp& zkp) const
+	{
+		switch (fpType_) {
+		case 0: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::PublicKey*)self_)->verify(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)zkp.self_)); break;
+		case 1: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::PublicKey*)self_)->verify(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::Zkp*)zkp.self_)); break;
+		case 2: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::PublicKey*)self_)->verify(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::Zkp*)zkp.self_)); break;
+		case 3: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::PublicKey*)self_)->verify(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::Zkp*)zkp.self_)); break;
+		case 4: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::PublicKey*)self_)->verify(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::Zkp*)zkp.self_)); break;
 		default: throw cybozu::Exception("elgamal_disp:PublicKey:bad fpType_") << fpType_ << __FILE__ << __LINE__;
 		}
 	}

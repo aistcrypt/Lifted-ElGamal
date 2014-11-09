@@ -104,6 +104,8 @@ struct ElgamalT {
 
 	struct CipherText : Elgamal::CipherText {
 	};
+	struct Zkp : Elgamal::Zkp {
+	};
 
 	struct PublicKey : Elgamal::PublicKey {
 		void save(const std::string& fileName) const
@@ -125,6 +127,16 @@ struct ElgamalT {
 		void enc(CipherText&c, int m) const
 		{
 			Elgamal::PublicKey::enc(c, Zn(m), System::rg);
+		}
+		void encWithZkp(CipherText&c, Zkp& zkp, int m) const
+		{
+			cybozu::crypto::Hash hash(System::hashName);
+			Elgamal::PublicKey::encWithZkp(c, zkp, m, hash, System::rg);
+		}
+		bool verify(const CipherText& c, const Zkp& zkp) const
+		{
+			cybozu::crypto::Hash hash(System::hashName);
+			return Elgamal::PublicKey::verify(c, zkp, hash);
 		}
 		void rerandomize(CipherText& c) const
 		{
@@ -177,6 +189,7 @@ typedef elgamal_disp::System System;
 typedef elgamal_disp::CipherText CipherText;
 typedef elgamal_disp::PublicKey PublicKey;
 typedef elgamal_disp::PrivateKey PrivateKey;
+typedef elgamal_disp::Zkp Zkp;
 
 } // elgamal
 #else
@@ -189,6 +202,7 @@ typedef Elgamal::System System;
 typedef Elgamal::CipherText CipherText;
 typedef Elgamal::PublicKey PublicKey;
 typedef Elgamal::PrivateKey PrivateKey;
+typedef Elgamal::Zkp Zkp;
 
 } // elgamal
 #endif

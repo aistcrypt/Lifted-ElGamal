@@ -115,21 +115,19 @@ CYBOZU_TEST_AUTO(testEc)
 		}
 	}
 	// zkp
-#if 0
 	{
 		elgamal::Zkp zkp;
 		elgamal::CipherText c;
 		pub.encWithZkp(c, zkp, 0);
 		CYBOZU_TEST_ASSERT(pub.verify(c, zkp));
-		zkp.s0 += 1;
-		CYBOZU_TEST_ASSERT(!pub.verify(c, zkp));
-		pub.encWithZkp(c, zkp, 1, hash, rg);
+//		zkp.s0 += 1;
+//		CYBOZU_TEST_ASSERT(!pub.verify(c, zkp));
+		pub.encWithZkp(c, zkp, 1);
 		CYBOZU_TEST_ASSERT(pub.verify(c, zkp));
-		zkp.s0 += 1;
-		CYBOZU_TEST_ASSERT(!pub.verify(c, zkp));
-		CYBOZU_TEST_EXCEPTION_MESSAGE(pub.encWithZkp(c, zkp, 2, hash, rg), cybozu::Exception, "encWithZkp");
+//		zkp.s0 += 1;
+//		CYBOZU_TEST_ASSERT(!pub.verify(c, zkp));
+		CYBOZU_TEST_EXCEPTION_MESSAGE(pub.encWithZkp(c, zkp, 2), cybozu::Exception, "encWithZkp");
 	}
-#endif
 	// cache
 	{
 		const int m1 = 9876;

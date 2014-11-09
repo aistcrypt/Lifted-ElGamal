@@ -90,6 +90,15 @@ public:
 	}
 };
 
+@setBaseName(Zkp)
+class Zkp {
+	int fpType_;
+	void *self_;
+	friend class PublicKey;
+public:
+	@baseFeature(Zkp, Zkp)
+};
+
 @setBaseName(PublicKey)
 class PublicKey {
 	int fpType_;
@@ -116,6 +125,14 @@ public:
 	void rerandomize(CipherText& c) const throw(std::exception)
 	{
 		@dispatch(((const @className(PublicKey)*)self_)->rerandomize(*((@className(CipherText)*)c.self_));)
+	}
+	void encWithZkp(CipherText& c, Zkp& zkp, int m) const throw(std::exception)
+	{
+		@dispatch(((const @className(PublicKey)*)self_)->encWithZkp(*((@className(CipherText)*)c.self_), *((@className(Zkp)*)zkp.self_), m);)
+	}
+	bool verify(const CipherText& c, const Zkp& zkp) const
+	{
+		@dispatch(return ((const @className(PublicKey)*)self_)->verify(*((@className(CipherText)*)c.self_), *((@className(Zkp)*)zkp.self_));)
 	}
 };
 
