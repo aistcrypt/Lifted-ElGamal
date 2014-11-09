@@ -345,7 +345,7 @@ CYBOZU_TEST_AUTO(testEc)
 		c1.add(c2);
 		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
 		prv.clearCache();
-		CYBOZU_TEST_EXCEPTION(prv.dec(c1), cybozu::Exception);
+		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
 	}
 	// benchmark
 	{
