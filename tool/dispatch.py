@@ -65,10 +65,10 @@ BASE_FEATURE = BASE_FEATURE_NOSTR + """
 
 def dispatchLine(fo, sp, code, baseName, friend):
 	if friend:
-		type = 'self.fpType_'
+		fpType = 'self.fpType_'
 	else:
-		type = 'fpType_'
-	print>>fo, sp + 'switch (%s) {' % type
+		fpType = 'fpType_'
+	print>>fo, sp + 'switch (%s) {' % fpType
 	i = 0
 	for type in TYPE_NUM_TBL:
 		def replaceFunc(p):
@@ -76,7 +76,7 @@ def dispatchLine(fo, sp, code, baseName, friend):
 		str = RE_CLASSNAME.sub(replaceFunc, code)
 		print>>fo, sp + 'case %d:' % i, str, 'break;'
 		i += 1
-	print>>fo, sp + 'default: throw cybozu::Exception("elgamal_disp:%s:bad fpType_") << %s << __FILE__ << __LINE__;' % (baseName, type)
+	print>>fo, sp + 'default: throw cybozu::Exception("elgamal_disp:%s:bad fpType_") << %s << __FILE__ << __LINE__;' % (baseName, fpType)
 	print>>fo, sp + '}'
 
 def replaceBaseFeature(replaced, baseFeature, baseName, inClassName):
