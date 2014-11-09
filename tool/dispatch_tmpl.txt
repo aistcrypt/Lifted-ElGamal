@@ -28,29 +28,32 @@ struct System {
 	{
 		std::istringstream is(param);
 		std::string ecParamStr;
-		std::string gmpStr;
-		is >> ecParamStr >> gmpStr;
-		const mie::EcParam *ecParam = mie::getEcParam(ecParamStr);
-		if (gmpStr != "gmp") {
-			if (ecParam->bitLen <= 64 * 3) {
-				elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::System::init(param);
-				getFpTypeInstance() = 1;
-				return;
-			}
-			if (ecParam->bitLen <= 64 * 4) {
-				elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::System::init(param);
-				getFpTypeInstance() = 2;
-				return;
-			}
-			if (ecParam->bitLen <= 64 * 6) {
-				elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::System::init(param);
-				getFpTypeInstance() = 3;
-				return;
-			}
-			if (64 * 8 < ecParam->bitLen && ecParam->bitLen <= 64 * 9) {
-				elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::System::init(param);
-				getFpTypeInstance() = 4;
-				return;
+		std::string hashParamStr;
+		if (is >> ecParamStr >> hashParamStr) {
+			const mie::EcParam *ecParam = mie::getEcParam(ecParamStr);
+			std::string gmpStr;
+			is >> gmpStr;
+			if (gmpStr != "gmp") {
+				if (ecParam->bitLen <= 64 * 3) {
+					elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::System::init(param);
+					getFpTypeInstance() = 1;
+					return;
+				}
+				if (ecParam->bitLen <= 64 * 4) {
+					elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::System::init(param);
+					getFpTypeInstance() = 2;
+					return;
+				}
+				if (ecParam->bitLen <= 64 * 6) {
+					elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::System::init(param);
+					getFpTypeInstance() = 3;
+					return;
+				}
+				if (64 * 8 < ecParam->bitLen && ecParam->bitLen <= 64 * 9) {
+					elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::System::init(param);
+					getFpTypeInstance() = 4;
+					return;
+				}
 			}
 		}
 		elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::System::init(param);
@@ -148,13 +151,13 @@ public:
 		@dispatch(*((@className(PublicKey)*)ret.self_) = ((const @className(PrivateKey*))self_)->getPublicKey();)
 		return ret;
 	}
-	void dec(elgamal::Zn& m, const CipherText& c) const throw(std::exception)
-	{
-		@dispatch(((const @className(PrivateKey)*)self_)->dec(m, *((const @className(CipherText)*)c.self_));)
-	}
 	int dec(const CipherText& c) const throw(std::exception)
 	{
 		@dispatch(return ((const @className(PrivateKey)*)self_)->dec(*((const @className(CipherText)*)c.self_));)
+	}
+	bool isZeroMessage(const CipherText& c) const throw(std::exception)
+	{
+		@dispatch(return ((const @className(PrivateKey)*)self_)->isZeroMessage(*((const @className(CipherText)*)c.self_));)
 	}
 };
 

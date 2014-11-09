@@ -9,6 +9,7 @@
 #include <mie/ec.hpp>
 #include <mie/gmp_util.hpp>
 #include <cybozu/random_generator.hpp>
+#include <cybozu/crypto.hpp>
 
 #if defined(_WIN64) || defined(__x86_64__)
 	#define ELGAMAL_OPT_FP
@@ -55,27 +56,49 @@ struct ElgamalT {
 	struct System {
 		static const mie::EcParam *ecParam;
 		static cybozu::RandomGenerator rg;
+		static cybozu::crypto::Hash::Name hashName;
 		/*
 			init system
-			@param param [in] string such as secp192k1
+			@param param [in] string such as "ecParamName hashName"
 			@note NOT thread safe because setting global parameters of elliptic curve
+			ex1) "secp192k1 sha256" // 192bit security + sha256
+			ex2) "secp160k1 sha1" // 160bit security + sha1
+			hashName : sha1 sha224 sha256 sha384 sha512
 		*/
-		static inline void init(const std::string param)
+		static inline void init(const std::string& param)
 		{
-			ecParam = mie::getEcParam(param);
-			Zn::setModulo(ecParam->n);
-			Fp::setModulo(ecParam->p);
-			Ec::setParam(ecParam->a, ecParam->b);
+			std::istringstream iss(param);
+			std::string ecParamStr;
+			std::string hashNameStr;
+			if (iss >> ecParamStr >> hashNameStr) {
+				ecParam = mie::getEcParam(ecParamStr);
+				Zn::setModulo(ecParam->n);
+				Fp::setModulo(ecParam->p);
+				Ec::setParam(ecParam->a, ecParam->b);
+				hashName = cybozu::crypto::Hash::getName(hashNameStr);
+				return;
+			}
+			throw cybozu::Exception("elgamal:System:init:bad param") << param;
 		}
 		static inline void save(std::ostream& os)
 		{
-			os << ecParam->name;
+			os << ecParam->name << ' ' << cybozu::crypto::Hash::getName(hashName) << std::endl;
 		}
 		static inline void load(std::istream& is)
 		{
-			std::string param;
-			is >> param;
-			init(param);
+			std::string line;
+			if (!std::getline(is, line)) throw cybozu::Exception("elgamal:System:init:load:cant' load line");
+			std::istringstream iss(line);
+			std::string ecParamStr;
+			std::string hashNameStr;
+			iss >> ecParamStr >> hashNameStr;
+			if (ecParamStr != ecParam->name) {
+				throw cybozu::Exception("elgamal::System:init:load:bad ecParam") << ecParamStr << ecParam->name;
+			}
+			const std::string curHashName = cybozu::crypto::Hash::getName(hashName);
+			if (hashNameStr != curHashName) {
+				throw cybozu::Exception("elgamal::System:init:load:bad hashName %s %s") << hashNameStr << curHashName;
+			}
 		}
 	};
 
@@ -141,6 +164,8 @@ struct ElgamalT {
 
 template<class Fp> const mie::EcParam* ElgamalT<Fp>::System::ecParam;
 template<class Fp> cybozu::RandomGenerator ElgamalT<Fp>::System::rg;
+template<class Fp> cybozu::crypto::Hash::Name ElgamalT<Fp>::System::hashName;
+
 
 } // elgamal_impl
 

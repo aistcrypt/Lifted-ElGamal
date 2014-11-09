@@ -53,10 +53,22 @@ BASE_FEATURE = BASE_FEATURE_NOSTR + """
 	void fromStr(const std::string& str) throw(std::exception)
 	{
 		@dispatch(((@className(@inClassName)*)self_)->fromStr(str);)
+	}
+	friend inline std::ostream& operator<<(std::ostream& os, const @baseName& self) throw(std::exception)
+	{
+		@dispatch(return os << *(const @className(@inClassName)*)(self.self_);)
+	}
+	friend inline std::istream& operator>>(std::istream& is, @baseName& self) throw(std::exception)
+	{
+		@dispatch(return is >> *(@className(@inClassName)*)(self.self_);)
 	}"""
 
-def dispatchLine(fo, sp, code, baseName):
-	print>>fo, sp + 'switch (fpType_) {'
+def dispatchLine(fo, sp, code, baseName, friend):
+	if friend:
+		type = 'self.fpType_'
+	else:
+		type = 'fpType_'
+	print>>fo, sp + 'switch (%s) {' % type
 	i = 0
 	for type in TYPE_NUM_TBL:
 		def replaceFunc(p):
@@ -64,7 +76,7 @@ def dispatchLine(fo, sp, code, baseName):
 		str = RE_CLASSNAME.sub(replaceFunc, code)
 		print>>fo, sp + 'case %d:' % i, str, 'break;'
 		i += 1
-	print>>fo, sp + 'default: throw cybozu::Exception("elgamal_disp:%s:bad fpType_") << fpType_ << __FILE__ << __LINE__;' % baseName
+	print>>fo, sp + 'default: throw cybozu::Exception("elgamal_disp:%s:bad fpType_") << %s << __FILE__ << __LINE__;' % (baseName, type)
 	print>>fo, sp + '}'
 
 def replaceBaseFeature(replaced, baseFeature, baseName, inClassName):
@@ -78,6 +90,7 @@ def dispatch(inName, outName):
 	fi = open(inName, "r")
 	fo = open(outName, "w")
 
+	friend = False
 	replaced = []
 	for line in fi:
 		p = RE_BASE_FEATURE.search(line)
@@ -100,9 +113,13 @@ def dispatch(inName, outName):
 		if p:
 			sp = p.group(1)
 			code = p.group(2)
-			dispatchLine(fo, sp, code, baseName)
+			dispatchLine(fo, sp, code, baseName, friend)
 		else:
 			print>>fo, line,
+			if line.find('}') > 0:
+				friend = False
+			elif line.find('friend inline') >= 0:
+				friend = True
 
 def main():
 	if len(sys.argv) != 3:
