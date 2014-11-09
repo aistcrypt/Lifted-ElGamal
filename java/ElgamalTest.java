@@ -20,11 +20,20 @@ public class ElgamalTest {
 	public static void main(String argv[]) {
 		try {
 			String ecStr = "secp192k1";
-			if (argv.length == 1) {
-				ecStr = argv[0];
+			String hashStr = "sha224";
+			for (int i = 0; i < argv.length; i++) {
+				if (argv[i].equals("-e") && i < argv.length - 1) {
+					ecStr = argv[i + 1];
+					i++;
+				} else
+				if (argv[i].equals("-h") && i < argv.length - 1) {
+					hashStr = argv[i + 1];
+					i++;
+				}
 			}
-			System.out.println("ec=" + ecStr);
-			Elgamal.SystemInit(ecStr);
+			String param = ecStr + " " + hashStr;
+			System.out.println("param=" + param);
+			Elgamal.SystemInit(param);
 
 			String prvStr = "";
 			String pubStr = "";
