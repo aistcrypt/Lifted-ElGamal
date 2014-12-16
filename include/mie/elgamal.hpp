@@ -9,8 +9,8 @@
 #include <limits.h>
 #include <string>
 #include <sstream>
-#include <cybozu/unordered_map.hpp>
 #include <cybozu/bitvector.hpp>
+#include <cybozu/unordered_map.hpp>
 #ifndef CYBOZU_UNORDERED_MAP_STD
 #include <map>
 #endif
@@ -364,7 +364,7 @@ struct ElgamalT {
 	*/
 	struct PowerCache {
 		typedef _G G;
-#if (CYBOZU_CPP_VERSION > CYBOZU_CPP_VERSION_CP03)
+#if (CYBOZU_CPP_VERSION > CYBOZU_CPP_VERSION_CP03) && !defined(__APPLE__) // QQQ : fix later
 		typedef CYBOZU_NAMESPACE_STD::unordered_map<G, int> Cache;
 #else
 		typedef std::map<G, int> Cache;

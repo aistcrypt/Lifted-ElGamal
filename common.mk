@@ -26,18 +26,13 @@ CFLAGS_WARN=-Wall -Wextra -Wformat=2 -Wcast-qual -Wcast-align -Wwrite-strings -W
 CFLAGS+= -g -D_FILE_OFFSET_BITS=64
 CFLAGS+=$(CFLAGS_WARN)
 BIT?=64
-ifeq ($(BIT),32)
-  CPU?=x86
-else
-  ifeq ($(BIT),64)
-    CPU?=x64
-  endif
-endif
 ifeq ($(BIT),0)
 	BIT_OPT=
 else
 	BIT_OPT=-m$(BIT)
 endif
+CFLAGS+= $(BIT_OPT)
+LDFLAGS+= $(BIT_OPT)
 ifeq ($(MARCH),)
 ifeq ($(shell expr $(GCC_VER) \> 4.2.1),1)
 	CFLAGS+=-march=native
@@ -65,21 +60,20 @@ endif
 
 TOPDIR:=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))/
 EXTDIR:=$(TOPDIR)../cybozulib_ext/
-CFLAGS+= -I$(TOPDIR)include -I$(TOPDIR)../cybozulib/include/ -I$(TOPDIR)../xbyak/ $(BIT_OPT) $(INC_DIR)
-LDFLAGS+= -L$(TOPDIR)lib $(BIT_OPT) -Wl,-rpath,'$$ORIGIN/../lib' $(LD_DIR)
 
 ####################################################
-
-CFLAGS+=-I$(TOPDIR)../mie/include
 
 ifeq ($(USE_TCMALLOC),1)
   CFLAGS += -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-free
   LDFLAGS += -ltcmalloc_minimal
 endif
 
+CFLAGS+= -I$(TOPDIR)include -I$(TOPDIR)../cybozulib/include/ -I$(TOPDIR)../mie/include -I$(TOPDIR)../xbyak/
+LDFLAGS+= -lgmp -lgmpxx -lcrypto
+
 ####################################################
 
-MKDEP = sh -ec '$(PRE)$(CC) -MM $(CFLAGS) $< | sed "s@\($*\)\.o[ :]*@$(OBJDIR)/\1.o $@ : @g" > $@; [ -s $@ ] || rm -f $@; touch $@'
+MKDEP = sh -ec '$(PRE)$(CXX) -MM $(CFLAGS) $< | sed "s@\($*\)\.o[ :]*@$(OBJDIR)/\1.o $@ : @g" > $@; [ -s $@ ] || rm -f $@; touch $@'
 
 CLEAN=$(RM) $(TARGET) $(OBJDIR)
 
