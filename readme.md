@@ -12,17 +12,16 @@ Lifted-ElGamal暗号ライブラリ
 
 # 対応CPUとOS
 
-* Intel Core 2 Duo以降の64bit Intelプロセッサ
+* Intel Core i3以降の64bit Intelプロセッサ
 * 64bit Windows 7 or later
-* 64bit Linux(tested on ubuntu 13.10)
-* Windows 7 + cygwin 6.1(32bit) or later
+* 64bit Linux
+* OSX
 
 # 確認コンパイラとツール
 
-* Visual Studio 2012 + MPIR 2.6.0 on Windows 7
-* gcc 4.8.1 + OpenSSL 1.0.1e + GMP 5.1.2
-* clang++ 3.0以降
-* gcc 4.5.3以降 on Cygwin
+* Windows 7 Professional SP1 + Visual Studio 2012/2013 + swig-3.0.2 + java 1.7.0_60
+* Ubuntu 14.04.1 LTS + gcc 4.8.2/clang 3.5 + java 1.7.0_65
+* OSX Yosemite 10.10.1 + Apple LLVM version 6.0 (clang-600.0.56) + java 1.7.0_71-b14
 
 # 設定
 
@@ -42,26 +41,24 @@ Lifted-ElGamal暗号ライブラリ
 
 # ビルドの確認
 
-Linux(64bit) or Cygwin(32bit):
-
-    cd lifted-elgamal
-    make -j # for debug
-    make -j RELEASE=1 # for release
-    make -j RELEASE=1 USE_TCMALLOC=1
-
-* use tcmalloc(optimal) for Linux ; sudo apt-get install libgoogle-perftools-dev
-
-Windows(64bit):
+* Linux or OSX:
+```
+  cd Lifted-ElGamal
+  make -j test # for debug
+  make -j test RELEASE=1 # for release
+```
+* javaのテスト
+```
+  cd java
+  make -j RELEASE=1
+  make -j test
+```
+* Windows(64bit):
 
     # for Visual Studio 2012
     open lifted-elgamal/elgamal.sln and build it
     # for Visual Studio 2013
     open lifted-elgamal/elgamal12.sln and build it
-
-Linux(32bit):
-
-    make -j BIT=32 # for debug
-    make -j BIT=32 RELEASE=1 # for release
 
 # アプリの実行に必要なファイルとライブラリ
 
