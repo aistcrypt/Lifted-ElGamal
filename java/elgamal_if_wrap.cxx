@@ -224,7 +224,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 extern "C" {
 #endif
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_SystemInit(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_SystemInit(JNIEnv *jenv, jclass jcls, jstring jarg1) {
   std::string *arg1 = 0 ;
   
   (void)jenv;
@@ -249,7 +249,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_SystemInit(JNIEn
 }
 
 
-SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1toStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_CipherText_1toStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   CipherText *arg1 = (CipherText *) 0 ;
   std::string result;
@@ -271,7 +271,7 @@ SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1t
 }
 
 
-SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1toString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_CipherText_1toString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   CipherText *arg1 = (CipherText *) 0 ;
   std::string result;
@@ -293,7 +293,7 @@ SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1t
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1fromStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_CipherText_1fromStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   CipherText *arg1 = (CipherText *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -321,7 +321,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1from
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_CipherText_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   CipherText *arg1 = (CipherText *) 0 ;
   CipherText *arg2 = 0 ;
   
@@ -346,7 +346,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1add(
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1mul_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_CipherText_1mul_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   CipherText *arg1 = (CipherText *) 0 ;
   int arg2 ;
   
@@ -366,7 +366,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1mul_
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1mul_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_CipherText_1mul_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   CipherText *arg1 = (CipherText *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -394,7 +394,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_CipherText_1mul_
 }
 
 
-SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_new_1CipherText(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_new_1CipherText(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   CipherText *result = 0 ;
   
@@ -406,7 +406,7 @@ SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_new_1CipherText
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_delete_1CipherText(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_delete_1CipherText(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   CipherText *arg1 = (CipherText *) 0 ;
   
   (void)jenv;
@@ -416,7 +416,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_delete_1CipherTe
 }
 
 
-SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1toStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1toStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   PublicKey *arg1 = (PublicKey *) 0 ;
   std::string result;
@@ -438,7 +438,7 @@ SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1to
 }
 
 
-SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1toString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1toString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   PublicKey *arg1 = (PublicKey *) 0 ;
   std::string result;
@@ -460,7 +460,7 @@ SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1to
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1fromStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1fromStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -488,7 +488,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1fromS
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1save(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1save(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -516,7 +516,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1save(
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1load(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1load(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -544,7 +544,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1load(
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1enc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jint jarg3) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1enc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jint jarg3) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   CipherText *arg2 = 0 ;
   int arg3 ;
@@ -571,7 +571,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1enc_1
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1enc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1enc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   CipherText *arg2 = 0 ;
   std::string *arg3 = 0 ;
@@ -606,7 +606,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1enc_1
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1rerandomize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1rerandomize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   CipherText *arg2 = 0 ;
   
@@ -631,7 +631,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1reran
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1add_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jint jarg3) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1add_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jint jarg3) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   CipherText *arg2 = 0 ;
   int arg3 ;
@@ -658,7 +658,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1add_1
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1add_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PublicKey_1add_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   CipherText *arg2 = 0 ;
   std::string *arg3 = 0 ;
@@ -693,7 +693,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PublicKey_1add_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_new_1PublicKey(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_new_1PublicKey(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   PublicKey *result = 0 ;
   
@@ -705,7 +705,7 @@ SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_new_1PublicKey(
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_delete_1PublicKey(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_delete_1PublicKey(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   PublicKey *arg1 = (PublicKey *) 0 ;
   
   (void)jenv;
@@ -715,7 +715,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_delete_1PublicKe
 }
 
 
-SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1toStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1toStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   std::string result;
@@ -737,7 +737,7 @@ SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1t
 }
 
 
-SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1toString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1toString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   std::string result;
@@ -759,7 +759,7 @@ SWIGEXPORT jstring JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1t
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1fromStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1fromStr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -787,7 +787,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1from
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1save(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1save(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -815,7 +815,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1save
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1load(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1load(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -843,7 +843,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1load
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1init(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1init(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   
   (void)jenv;
@@ -861,7 +861,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1init
 }
 
 
-SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1getPublicKey(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1getPublicKey(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   PublicKey result;
@@ -883,7 +883,7 @@ SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1get
 }
 
 
-SWIGEXPORT jint JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1dec(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jint JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1dec(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   CipherText *arg2 = 0 ;
@@ -912,7 +912,7 @@ SWIGEXPORT jint JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1dec(
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1setCache(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1setCache(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   int arg2 ;
   int arg3 ;
@@ -934,7 +934,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1setC
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1clearCache(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_PrivateKey_1clearCache(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   
   (void)jenv;
@@ -952,7 +952,7 @@ SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_PrivateKey_1clea
 }
 
 
-SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_new_1PrivateKey(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_new_1PrivateKey(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   PrivateKey *result = 0 ;
   
@@ -964,7 +964,7 @@ SWIGEXPORT jlong JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_new_1PrivateKey
 }
 
 
-SWIGEXPORT void JNICALL Java_jp_go_aist_cbrc_elgamal_ElgamalJNI_delete_1PrivateKey(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_jp_go_aist_resec_elgamal_ElgamalJNI_delete_1PrivateKey(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   PrivateKey *arg1 = (PrivateKey *) 0 ;
   
   (void)jenv;
