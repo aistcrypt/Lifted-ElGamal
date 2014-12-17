@@ -113,4 +113,4 @@ licenseフォルダにはオリジナルのライセンスファイルがある�
 # history
 
 2014/April/23 ; initial version
-
+2014/Dec/18 ; support wrapper api and java
