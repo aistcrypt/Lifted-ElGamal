@@ -22,15 +22,15 @@ void bench(const char *param)
 int main(int argc, char *argv[])
 	try
 {
-	static const char tbl[][16] = {
-		"secp192k1",
-		"NIST_P192",
-		"secp224k1",
-		"NIST_P224",
-		"secp256k1",
-		"NIST_P256",
-		"secp384r1",
-		"secp521r1",
+	static const char tbl[][32] = {
+		"secp192k1 sha1",
+		"NIST_P192 sha1",
+		"secp224k1 sha224",
+		"NIST_P224 sha224",
+		"secp256k1 sha256",
+		"NIST_P256 sha256",
+		"secp384r1 sha384",
+		"secp521r1 sha512",
 	};
 	if (argc == 1) {
 		for (size_t i = 0; i < CYBOZU_NUM_OF_ARRAY(tbl); i++) {
