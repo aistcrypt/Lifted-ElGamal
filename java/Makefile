@@ -30,6 +30,9 @@ $(TARGET): elgamal_if_wrap.cxx
 
 DjnTest.class: ElgamalTest.java $(TARGET)
 
+jar:
+	jar cvf elgamal.jar jp
+
 test: ElgamalTest.class $(TARGET)
 	$(JAVA_EXE) ElgamalTest
 	$(JAVA_EXE) ElgamalTest -e NIST_P192
