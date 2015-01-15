@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package jp.go.aist.resec.elgamal;
+package jp.go.aist.risec.elgamal;
 
 public class PrivateKey {
   private long swigCPtr;

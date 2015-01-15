@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package jp.go.aist.resec.elgamal;
+package jp.go.aist.risec.elgamal;
 
 public class ElgamalJNI {
   public final static native void SystemInit(String jarg1);
