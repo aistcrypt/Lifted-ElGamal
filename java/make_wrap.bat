@@ -2,7 +2,7 @@
 call set-java-path.bat
 set JAVA_INCLUDE=%JAVA_DIR%\include
 set SWIG=..\..\swig\swigwin-3.0.2\swig.exe
-set PACKAGE_NAME=jp.go.aist.resec.elgamal
+set PACKAGE_NAME=jp.go.aist.risec.elgamal
 set PACKAGE_DIR=%PACKAGE_NAME:.=\%
 
 echo [[run swig]]

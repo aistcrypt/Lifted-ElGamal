@@ -1,5 +1,5 @@
 import java.io.*;
-import jp.go.aist.resec.elgamal.*;
+import jp.go.aist.risec.elgamal.*;
 
 /*
 	ElgamalText [ecParam]

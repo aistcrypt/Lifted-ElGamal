@@ -11,7 +11,7 @@ else
 endif
 CFLAGS+= -shared -fPIC $(JAVA_INC)
 
-PACKAGE_NAME=jp.go.aist.resec.elgamal
+PACKAGE_NAME=jp.go.aist.risec.elgamal
 PACKAGE_DIR=$(subst .,/,$(PACKAGE_NAME))
 
 TARGET=../bin/libelgamal_if_wrap.$(LIB_SUF)
