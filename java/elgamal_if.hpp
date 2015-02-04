@@ -92,9 +92,9 @@ public:
 		ret.self_ = self_.getPublicKey();
 		return ret;
 	}
-	int dec(const CipherText& c) const throw(std::exception)
+	int dec(const CipherText& c, bool *b = 0) const throw(std::exception)
 	{
-		return self_.dec(c.self_);
+		return self_.dec(c.self_, b);
 	}
 	void setCache(int rangeMin, int rangeMax) throw(std::exception)
 	{

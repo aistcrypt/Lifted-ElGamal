@@ -17,6 +17,13 @@ public class ElgamalTest {
 			System.out.println("NG : " + msg + ", x = " + x + ", y = " + y);
 		}
 	}
+	public static void assertBool(String msg, boolean b) {
+		if (b) {
+			System.out.println("OK : " + msg);
+		} else {
+			System.out.println("NG : " + msg);
+		}
+	}
 	public static void main(String argv[]) {
 		try {
 			String ecStr = "secp192k1";
@@ -54,6 +61,7 @@ public class ElgamalTest {
 
 			PrivateKey prv = new PrivateKey();
 			prv.fromStr(prvStr);
+			prv.setCache(0, 60000);
 
 			int dec = prv.dec(c);
 			// verify dec(enc(m)) == m
@@ -113,13 +121,19 @@ public class ElgamalTest {
 			String m3 = "-2000000";
 			String m4 =  "2001234";
 			CipherText c2 = new CipherText();
+			SWIGTYPE_p_bool b = Elgamal.new_p_bool();
 			pub.enc(c, m3);
+			dec = prv.dec(c, b);
+			assertBool("expect dec fail", !Elgamal.p_bool_value(b));
 			pub.enc(c2, m4);
+			dec = prv.dec(c2, b);
+			assertBool("expect dec fail", !Elgamal.p_bool_value(b));
 			c.add(c2); // m3 + m4
 
-			dec = prv.dec(c);
+			dec = prv.dec(c, b);
 			assertEquals("int add", 1234, dec);
-
+			assertBool("expect dec success", Elgamal.p_bool_value(b));
+			Elgamal.delete_p_bool(b);
 		} catch (RuntimeException e) {
 			System.out.println("unknown exception :" + e);
 		}

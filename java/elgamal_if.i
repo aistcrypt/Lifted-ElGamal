@@ -6,5 +6,7 @@
 %{
 #include "elgamal_if.hpp"
 %}
+%include cpointer.i
+%pointer_functions(bool, p_bool);
 
 %include "elgamal_if.hpp"

@@ -395,10 +395,17 @@ struct ElgamalT {
 		/*
 			return m such that f^m = g
 		*/
-		int getExponent(const G& g) const
+		int getExponent(const G& g, bool *b = 0) const
 		{
 			typename Cache::const_iterator i = cache.find(g);
-			if (i == cache.end()) throw cybozu::Exception("Elgamal:PowerCache:getExponent:not found") << g;
+			if (i == cache.end()) {
+				if (b) {
+					*b = false;
+					return 0;
+				}
+				throw cybozu::Exception("Elgamal:PowerCache:getExponent:not found") << g;
+			}
+			if (b) *b = true;
 			return i->second;
 		}
 		void clear()
@@ -495,10 +502,12 @@ struct ElgamalT {
 			decode message by lookup table if !cache.isEmpty()
 			                  brute-force attack otherwise
 			input : c = (c1, c2)
+			        b : set false if not found
 			return m
 		*/
-		int dec(const CipherText& c) const
+		int dec(const CipherText& c, bool *b = 0) const
 		{
+#if 0
 			if (cache.isEmpty()) {
 				Zn m;
 				dec(m, c);
@@ -509,9 +518,10 @@ struct ElgamalT {
 					return -(int)Zn::getBlock(m, 0);
 				}
 			}
+#endif
 			G powfm;
 			getPowerf(powfm, c);
-			return cache.getExponent(powfm);
+			return cache.getExponent(powfm, b);
 		}
 		/*
 			check whether c is encrypted zero message

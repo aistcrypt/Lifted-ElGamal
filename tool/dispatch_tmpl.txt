@@ -168,9 +168,9 @@ public:
 		@dispatch(*((@className(PublicKey)*)ret.self_) = ((const @className(PrivateKey*))self_)->getPublicKey();)
 		return ret;
 	}
-	int dec(const CipherText& c) const throw(std::exception)
+	int dec(const CipherText& c, bool *b = 0) const throw(std::exception)
 	{
-		@dispatch(return ((const @className(PrivateKey)*)self_)->dec(*((const @className(CipherText)*)c.self_));)
+		@dispatch(return ((const @className(PrivateKey)*)self_)->dec(*((const @className(CipherText)*)c.self_), b);)
 	}
 	bool isZeroMessage(const CipherText& c) const throw(std::exception)
 	{

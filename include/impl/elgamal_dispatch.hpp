@@ -452,7 +452,7 @@ public:
 		default: throw cybozu::Exception("elgamal_disp:PublicKey:bad fpType_") << fpType_ << __FILE__ << __LINE__;
 		}
 	}
-	void encWithZkp(CipherText& c, Zkp& zkp, int m) const
+	void encWithZkp(CipherText& c, Zkp& zkp, int m) const throw(std::exception)
 	{
 		switch (fpType_) {
 		case 0: ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::PublicKey*)self_)->encWithZkp(*((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::CipherText*)c.self_), *((elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::Zkp*)zkp.self_), m); break;
@@ -640,14 +640,14 @@ public:
 		}
 		return ret;
 	}
-	int dec(const CipherText& c) const throw(std::exception)
+	int dec(const CipherText& c, bool *b = 0) const throw(std::exception)
 	{
 		switch (fpType_) {
-		case 0: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::CipherText*)c.self_)); break;
-		case 1: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::CipherText*)c.self_)); break;
-		case 2: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::CipherText*)c.self_)); break;
-		case 3: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::CipherText*)c.self_)); break;
-		case 4: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::CipherText*)c.self_)); break;
+		case 0: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType0>::CipherText*)c.self_), b); break;
+		case 1: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType3>::CipherText*)c.self_), b); break;
+		case 2: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType4>::CipherText*)c.self_), b); break;
+		case 3: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType6>::CipherText*)c.self_), b); break;
+		case 4: return ((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::PrivateKey*)self_)->dec(*((const elgamal_impl::ElgamalT<elgamal_disp::local::FpType9>::CipherText*)c.self_), b); break;
 		default: throw cybozu::Exception("elgamal_disp:PrivateKey:bad fpType_") << fpType_ << __FILE__ << __LINE__;
 		}
 	}

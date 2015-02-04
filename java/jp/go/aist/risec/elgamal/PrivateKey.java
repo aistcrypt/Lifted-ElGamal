@@ -63,8 +63,12 @@ public class PrivateKey {
     return new PublicKey(ElgamalJNI.PrivateKey_getPublicKey(swigCPtr, this), true);
   }
 
+  public int dec(CipherText c, SWIGTYPE_p_bool b) {
+    return ElgamalJNI.PrivateKey_dec__SWIG_0(swigCPtr, this, CipherText.getCPtr(c), c, SWIGTYPE_p_bool.getCPtr(b));
+  }
+
   public int dec(CipherText c) {
-    return ElgamalJNI.PrivateKey_dec(swigCPtr, this, CipherText.getCPtr(c), c);
+    return ElgamalJNI.PrivateKey_dec__SWIG_1(swigCPtr, this, CipherText.getCPtr(c), c);
   }
 
   public void setCache(int rangeMin, int rangeMax) {

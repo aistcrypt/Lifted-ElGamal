@@ -9,6 +9,11 @@
 package jp.go.aist.risec.elgamal;
 
 public class ElgamalJNI {
+  public final static native long new_p_bool();
+  public final static native long copy_p_bool(boolean jarg1);
+  public final static native void delete_p_bool(long jarg1);
+  public final static native void p_bool_assign(long jarg1, boolean jarg2);
+  public final static native boolean p_bool_value(long jarg1);
   public final static native void SystemInit(String jarg1);
   public final static native String CipherText_toStr(long jarg1, CipherText jarg1_);
   public final static native String CipherText_toString(long jarg1, CipherText jarg1_);
@@ -37,7 +42,8 @@ public class ElgamalJNI {
   public final static native void PrivateKey_load(long jarg1, PrivateKey jarg1_, String jarg2);
   public final static native void PrivateKey_init(long jarg1, PrivateKey jarg1_);
   public final static native long PrivateKey_getPublicKey(long jarg1, PrivateKey jarg1_);
-  public final static native int PrivateKey_dec(long jarg1, PrivateKey jarg1_, long jarg2, CipherText jarg2_);
+  public final static native int PrivateKey_dec__SWIG_0(long jarg1, PrivateKey jarg1_, long jarg2, CipherText jarg2_, long jarg3);
+  public final static native int PrivateKey_dec__SWIG_1(long jarg1, PrivateKey jarg1_, long jarg2, CipherText jarg2_);
   public final static native void PrivateKey_setCache(long jarg1, PrivateKey jarg1_, int jarg2, int jarg3);
   public final static native void PrivateKey_clearCache(long jarg1, PrivateKey jarg1_);
   public final static native long new_PrivateKey();
