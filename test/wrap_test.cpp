@@ -142,9 +142,13 @@ CYBOZU_TEST_AUTO(testEc)
 		c1.add(c2);
 		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
 		// bench
-		CYBOZU_BENCH("w/  cache", prv.dec, c1);
+		CYBOZU_BENCH("cache", prv.dec, c1);
+		bool b;
+		prv.dec(c1, &b);
+		CYBOZU_TEST_ASSERT(b);
 		prv.clearCache();
-		CYBOZU_BENCH_C("w/o cache", 10, prv.dec, c1);
+		prv.dec(c1, &b);
+		CYBOZU_TEST_ASSERT(!b);
 	}
 }
 

@@ -12,10 +12,8 @@ void bench(const char *param)
 
 	elgamal::CipherText c;
 	CYBOZU_BENCH("enc", pub.enc, c, 12345);
-	// not set cache
-	CYBOZU_BENCH_C("dec wo tbl", 10, prv.dec, c);
 	prv.setCache(0, 20000);
-	CYBOZU_BENCH("dec w  tbl", prv.dec, c);
+	CYBOZU_BENCH("dec", prv.dec, c);
 	CYBOZU_BENCH("rand", pub.rerandomize, c);
 }
 

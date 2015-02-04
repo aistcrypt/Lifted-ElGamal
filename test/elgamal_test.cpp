@@ -199,6 +199,7 @@ CYBOZU_TEST_AUTO(testEc)
 	*/
 	ElgamalEc::PrivateKey prv;
 	prv.init(P, bitLen, rg);
+	prv.setCache(0, 60000);
 	const ElgamalEc::PublicKey& pub = prv.getPublicKey();
 
 	const int m1 = 12345;
@@ -231,6 +232,7 @@ CYBOZU_TEST_AUTO(testEc)
 			ss << prv;
 			ss >> prv2;
 		}
+		prv.setCache(-200, 60000);
 		Zn d;
 		prv2.dec(d, c1);
 		CYBOZU_TEST_EQUAL(d, m1);
@@ -343,9 +345,13 @@ CYBOZU_TEST_AUTO(testEc)
 		CYBOZU_TEST_EQUAL(m1, dec1);
 		CYBOZU_TEST_EQUAL(m2, dec2);
 		c1.add(c2);
-		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
+		bool b;
+		int dec = prv.dec(c1, &b);
+		CYBOZU_TEST_EQUAL(m1 + m2, dec);
+		CYBOZU_TEST_ASSERT(b);
 		prv.clearCache();
-		CYBOZU_TEST_EQUAL(m1 + m2, prv.dec(c1));
+		prv.dec(c1, &b);
+		CYBOZU_TEST_ASSERT(!b);
 	}
 	// benchmark
 	{
