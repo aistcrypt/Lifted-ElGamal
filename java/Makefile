@@ -28,8 +28,6 @@ $(TARGET): elgamal_if_wrap.cxx
 %.class: %.java
 	javac $<
 
-DjnTest.class: ElgamalTest.java $(TARGET)
-
 jar:
 	jar cvf elgamal.jar jp
 
