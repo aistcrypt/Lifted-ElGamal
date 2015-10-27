@@ -3,8 +3,8 @@ ifeq ($(UNAME_S),Darwin)
   JAVA_INC=-I/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/
   LIB_SUF=dylib
 else
-  JAVA_INC=-I/usr/lib/jvm/default-java/include
-#JAVA_INC=-I/usr/lib/jvm/java-7-openjdk-amd64/include
+  JAVA_HOME=$(realpath $(dir $(realpath $(shell which javac)))..)
+  JAVA_INC=-I$(JAVA_HOME)/include
   LIB_SUF=so
   CFLAGS+=-z noexecstack
   LIB+=-lrt
