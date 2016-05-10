@@ -85,19 +85,11 @@ struct ElgamalT {
 			os.flags(flags);
 			return os;
 		}
-		void isValid() {
-			c1.normalize();
-			c2.normalize();
-			if (!(G::isValid(c1.x, c1.y) && G::isValid(c2.x, c2.y))) {
-				throw cybozu::Exception("ElgamalT:CipherText:isValid invalid point");
-			}
-		}
 		friend inline std::istream& operator>>(std::istream& is, CipherText& self)
 		{
 			std::ios_base::fmtflags flags = is.flags();
 			is >> std::hex >> self.c1 >> self.c2;
 			is.flags(flags);
-			self.isValid();
 			return is;
 		}
 		void appendToBitVec(cybozu::BitVector& bv) const
@@ -113,7 +105,6 @@ struct ElgamalT {
 			c1.fromBitVec(t);
 			bv.extract(t, bitLen, bitLen);
 			c2.fromBitVec(t);
-			isValid();
 		}
 		static inline size_t getBitVecSize()
 		{
@@ -195,12 +186,6 @@ struct ElgamalT {
 		const G& getF() const { return f; }
 		void init(size_t bitLen, const G& f, const G& g, const G& h)
 		{
-			f.normalize();
-			g.normalize();
-			h.normalize();
-			if (!(G::isValid(f.x, f.y) && G::isValid(g.x, g.y) && G::isValid(h.x, h.y))) {
-				throw cybozu::Exception("ElgamalT:PublicKey:init invalid point");
-			}
 			this->bitLen = bitLen;
 			this->f = f;
 			this->g = g;
