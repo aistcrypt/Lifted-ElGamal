@@ -23,7 +23,6 @@ struct TagEc;
 const mie::EcParam& para = mie::ecparam::secp192k1;
 cybozu::RandomGenerator rg;
 
-#if 0
 CYBOZU_TEST_AUTO(testFp)
 {
 	typedef mie::FpT<mie::Gmp, TagFp> Zn;
@@ -183,7 +182,6 @@ CYBOZU_TEST_AUTO(testFp)
 		CYBOZU_TEST_EXCEPTION_MESSAGE(pub.encWithZkp(c, zkp, 2, hash, rg), cybozu::Exception, "encWithZkp");
 	}
 }
-#endif
 
 CYBOZU_TEST_AUTO(testEc)
 {
