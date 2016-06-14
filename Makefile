@@ -1,12 +1,14 @@
 include common.mk
 
-all:
-	-$(MKDIR) bin
+all: bin
 	$(MAKE) -C test
 	$(MAKE) -C src
 
-test:
+test: bin
 	$(MAKE) -C test test
+
+bin:
+	$(MKDIR) bin
 
 clean:
 #	$(MAKE) -C src clean
