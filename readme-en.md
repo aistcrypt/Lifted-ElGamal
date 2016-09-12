@@ -2,6 +2,9 @@
 
 C++ Library for the Lifted-ElGamal Cryptosystem
 
+# Remark
+The laster version is moved to [mcl](https://github.com/herumi/mcl).
+
 # Summary
 This library provides for the implementation of the lifted-ElGamal cryptosystem with additively homomorphic properties [1] and the non-interactive zero knowledge proof for restricting message space [2].
 
